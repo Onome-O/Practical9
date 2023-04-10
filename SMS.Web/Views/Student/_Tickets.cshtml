@@ -1,0 +1,62 @@
+@model Student
+
+<h4>Tickets</h4>
+<table class="table table-sm">
+    <thead>
+        <tr>          
+            <th>Issue</th>
+            <th>Created</th>  
+            <th>Active</th>       
+            <th>Actions</th>  
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Tickets.Count == 0)
+        {
+            <tr>              
+                <td colspan="4">No tickets...</td>
+            </tr>
+        }
+        else
+        {
+            @foreach(var t in Model.Tickets) {
+                <tr>             
+                    <td>@t.Issue</td>
+                    <td>@t.CreatedOn</td>  
+                    <td> 
+                        <!-- TBC Q4 - display suitable icons -->
+                        @t.Active                                             
+                    </td>
+                    <td>
+                        <!-- TBC Q4 - display disabled button when ticket is inactive -->
+                        @if (t.Active)
+                        {
+                          <a asp-action="TicketDelete" asp-route-id="@t.Id" class="btn btn-sm btn-outline-danger">
+                              <i class="bi bi-trash-fill me-1" title="delete ticket"></i>
+                              Delete
+                          </a>
+                       
+                          <!-- TBC Q4 - display disabled button when ticket is inactive -->           
+                          <a asp-action="TicketEdit" asp-route-id="@t.Id" class="btn btn-sm btn-outline-dark">
+                              <i class="bi bi-pen-fill me-1" title="edit ticket"></i>
+                              Edit
+                          </a>
+                        }
+                        else
+                        {
+                          <button disabled class="btn btn-sm btn-outline-dark">
+                            <i class="bi bi-trash-fill me-1" title="Delete ticket"></i>
+                            Delete
+                          </button>
+                          <button disabled class="btn btn-sm btn-outline-dark">
+                            <i class="bi bi-pen-fill me-1" title="edit ticket"></i>
+                            Edit 
+                          </button>
+                        }
+                    </td>             
+                </tr>
+                
+            }
+        }
+    </tbody>
+</table> 
