@@ -61,7 +61,8 @@ return RedirectToAction(nameof(Index));
             if (student is null) 
             {
                 // TBC - Q2 replace with Alert and Redirect
-                return NotFound();
+                Alert("Issue creating the student", AlertType.warning);
+                return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Details), new { Id = student.Id});   
         }
@@ -80,7 +81,8 @@ return RedirectToAction(nameof(Index));
         if (student is null)
         {
             // TBC - Q2 replace with Alert and Redirect
-            return NotFound();
+            Alert("Student Not Found", AlertType.warning);
+            return RedirectToAction(nameof(Index));
         }  
 
         // pass student to view for editing
@@ -103,6 +105,10 @@ return RedirectToAction(nameof(Index));
         {            
             var student = svc.UpdateStudent(s);
             // TBC - Q2 Add alert when update failed
+            if (student is null)
+        {
+            Alert("Issue updating the student", AlertType.warning);
+        }
 
             // redirect back to view the student details
             return RedirectToAction(nameof(Details), new { Id = s.Id });
@@ -121,7 +127,8 @@ return RedirectToAction(nameof(Index));
         if (student == null)
         {
             // TBC - Q2 replace with Alert and Redirect
-            return NotFound();
+          Alert("Student not found", AlertType.warning);
+          return RedirectToAction(nameof(Index));
         }     
         
         // pass student to view for deletion confirmation
@@ -135,7 +142,14 @@ return RedirectToAction(nameof(Index));
         // delete student via service
         var deleted = svc.DeleteStudent(id);
         // TBC - Q2 add success / failure Alert
-        
+        if (deleted)
+      {
+          Alert("Student deleted", AlertType.success);
+      }
+        else 
+      {
+          Alert("Student could not  be deleted", AlertType.warning);
+      }
         // redirect to the index view
         return RedirectToAction(nameof(Index));
     }
@@ -149,7 +163,8 @@ return RedirectToAction(nameof(Index));
         if (student == null)
         {
             // TBC - replace with Alert and Redirect
-            return NotFound();
+            Alert("Student not found", AlertType.warning);
+            return RedirectToAction(nameof(Index));
         }
 
         // create a ticket view model and set foreign key
@@ -166,6 +181,14 @@ return RedirectToAction(nameof(Index));
         {                
             var ticket = svc.CreateTicket(t.StudentId, t.Issue); 
             // TBC - Q2 add alert for success/failure
+            // if (!sucess)
+            // {
+            //     Alert("Ticket created", AlertType.success);
+            // }
+            // else 
+            // {
+            //     Alert("Ticket could not  be created", AlertType.warning);
+            // }
 
             // redirect to display student - note how Id is passed
             return RedirectToAction(
@@ -183,7 +206,8 @@ return RedirectToAction(nameof(Index));
         if (ticket == null)
         {
             // TBC - replace with Alert and Redirect
-            return NotFound();
+             Alert("Ticket not found", AlertType.warning);
+             return RedirectToAction(nameof(Index));
         }        
         return View( ticket );
     }
@@ -215,7 +239,8 @@ return RedirectToAction(nameof(Index));
         if (ticket == null)
         {
             // TBC - Q2 replace with Alert and Redirect
-            return NotFound();
+            Alert("Ticket not found", AlertType.warning);
+            return RedirectToAction(nameof(Index));;
         }     
         
         // pass ticket to view for deletion confirmation
@@ -229,6 +254,14 @@ return RedirectToAction(nameof(Index));
         var deleted = svc.DeleteTicket(id);
 
         // TBC - Q2 add success/failure alert
+        if (deleted)
+        {
+            Alert("Ticket deleted", AlertType.success);
+        }
+        else 
+        {
+            Alert("Ticket could not  be deleted", AlertType.warning);
+        }
 
         // redirect to the student details view
         return RedirectToAction(nameof(Details), new { Id = studentId });

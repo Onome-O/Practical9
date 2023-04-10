@@ -1,19 +1,20 @@
 ﻿@model IList<Ticket>
 
 <!-- TBC Add breadcrumbs -->
-
+<partial name="_BreadCrumbs" model=@(new [] {
+     ("/","Home"),
+     ("","Tickets")
+ }) />
 <div class="card rounded shadow p-4">
   
    <div class="d-flex align-items-center justify-content-between mb-4">
       <h3>Open Ticket List</h3>
 
       <!-- TBC - Q6 add button to create a ticket. -->
-            <form asp-action="Create">
-                <input type="hidden" name="id" value=@tmv.Id />
-                <button type="submit" class="btn btn-link text-dark">
-                <i class="bi bi-plus mr-2" title="Create ticket"></i>
-                </button>
-            </form>
+                <a asp-action="Create" class="btn btn-primary btn-sm">
+                <i class="bi bi-plus"></i> Create Ticket
+                </a>
+            
       <!-- Consider adding an icon such as 'bi bi-plus -->
    </div>
 

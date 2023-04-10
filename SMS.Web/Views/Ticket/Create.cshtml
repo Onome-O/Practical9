@@ -1,7 +1,11 @@
 @model TicketViewModel
 
 <!-- TBC add a breadcrumb partial -->
-
+<partial name="_BreadCrumbs" model=@(new [] {
+    ("/","Home"),
+    ($"/ticket/index","Tickets"),
+    ("","Create Ticket")
+}) />
 
 <div class="card rounded shadow p-4">
     <h3>Create Ticket</h3>

@@ -25,15 +25,16 @@ namespace SMS.Web.Controllers
         [HttpPost]
         public IActionResult Close(int id)
         {
-            // TBC - Q5 close ticket via service then check that ticket was closed
-          var t = svc.CloseTicket(id);
-            // if not display a warning/error alert otherwise a success alert
-          // if (t == null){
-          //     Alert($"Ticket Closed", AlertType.info);
-          //   } else {
-          //     Alert($"Problem closing Ticket", AlertType.warning);
-          //   }
-          
+            
+        // TBC - close ticket via service then check that ticket was
+        // if not display a warning/error alert otherwise a success
+        // close ticket via service
+        var t = svc.CloseTicket(id);
+        if (t == null)
+        {
+            Alert("No such ticket found", AlertType.warning);
+        }
+        Alert($"Ticket {id } closed", AlertType.info);
              
             return RedirectToAction(nameof(Index));
         }       
@@ -46,7 +47,7 @@ namespace SMS.Web.Controllers
                        
             var tvm = new TicketViewModel {
                 // TBC Q5 - populate select list property using list of students
-               Students = new SelectList(students, "id", "Name")
+               Students = new SelectList(students, "Id", "Name")
             };
 
             // render blank form passing view model as a a parameter
@@ -71,6 +72,9 @@ namespace SMS.Web.Controllers
 
             // TBC - Q6 before sending viewmodel back (due to validation issues)
             //       repopulate the select list
+            var students = svc.GetStudents();
+            tvm.Students = new SelectList(students,"Id","Name");
+
             return View(tvm);
         }
     }
